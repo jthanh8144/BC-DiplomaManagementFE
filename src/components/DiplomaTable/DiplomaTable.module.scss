@@ -1,0 +1,13 @@
+.main-content {
+  &__table {
+    font-size: 14px;
+    max-height: calc(100vh - (70px + 24px + 14px + 78px + 38px));
+    overflow-y: scroll;
+  }
+
+  &__data tr td i {
+    display: inline;
+    cursor: pointer;
+    padding: 2px;
+  }
+}

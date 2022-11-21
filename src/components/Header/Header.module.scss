@@ -1,0 +1,52 @@
+.navbar {
+  height: 70px;
+}
+
+.main-nav {
+  padding: 0 30px;
+
+  &__logo {
+    margin-right: 50px;
+  }
+
+  &__item {
+    font-size: 14px;
+    font-weight: 500;
+
+    &-link {
+      padding: 3px 5px;
+      border-bottom: transparent 2px solid;
+    
+      &.active {
+        border-color: red;
+      }
+    }
+  }
+
+  &__item + &__item {
+    
+  padding-left: 10px;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    align-content: center;
+  }
+
+  &__avatar-img {
+    object-fit: contain;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+
+  &__link {
+    color: #ff0000;
+
+    &:hover {
+      color: #ff7b7b;
+    }
+  }
+}
+

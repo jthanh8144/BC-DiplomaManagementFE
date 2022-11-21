@@ -1,32 +1,25 @@
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+  background: transparent;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
+  background: #e9879c;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #666;
+  background: #ea6481;
 }
 
-button {
-    background-color: transparent;
-}
-
-button,
-input,
-[tabindex] {
-    outline: none;
-    border: none;
+body {
+  background-color: #e4e5e5;
 }
 
 a[href] {
-    text-decoration: none;
+  text-decoration: none !important;
 }

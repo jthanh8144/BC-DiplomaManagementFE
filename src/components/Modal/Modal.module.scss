@@ -1,0 +1,38 @@
+.modal-section {
+  &__form + &__form {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__form {
+    &-preview {
+      display: flex;
+      justify-content: center;
+    }
+
+    &-img {
+      height: 300px;
+    }
+  }
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+
+  &__label {
+    font-weight: 300;
+  }
+
+  &__info {
+    font-weight: 500;
+  }
+}
