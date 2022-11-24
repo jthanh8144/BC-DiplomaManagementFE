@@ -1,11 +1,20 @@
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 
 import styles from './Diplomas.module.scss';
 import { DiplomaTable } from '~/components/DiplomaTable/DiplomaTable';
+import { ModalForm } from '~/components/Modal';
 
 const cx = classNames.bind(styles);
 
+const diplomas = [{}];
+
 export function Diplomas() {
+  const [isShow, setIsShow] = useState(false)
+  const handleClick = () => {
+    setIsShow(!isShow)
+  };
+
   return (
     <main className={cx('main-content')}>
       <div className={cx('main-content__top')}>
@@ -13,11 +22,15 @@ export function Diplomas() {
           type="button"
           className="btn btn-danger"
           data-bs-toggle="modal"
-          data-bs-target="#modal-info"
+          data-bs-target="#modal-form"
         >
           <i className="fa-solid fa-plus"></i>
           Thêm văn bằng
         </button>
+        <button className="btn btn-danger" onClick={handleClick}>
+          Sửa văn bằng
+        </button>
+        {isShow && <ModalForm/>}
         <div className={cx('main-content__top-search')}>
           <input
             type="text"
@@ -29,7 +42,7 @@ export function Diplomas() {
           </span>
         </div>
       </div>
-      <DiplomaTable diplomas={[{id: 1}, {id: 2}]} />
+      <DiplomaTable diplomas={[{ id: 1 }, { id: 2 }]} />
     </main>
   );
 }

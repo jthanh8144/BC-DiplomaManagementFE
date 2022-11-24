@@ -47,7 +47,7 @@ export function Header() {
               <>
                 <li className={cx('nav-item', 'main-nav__item')}>
                   <Link
-                    to="/diplomas"
+                    to="/admin/diplomas"
                     className={cx('nav-link', 'main-nav__item-link', 'active')}
                   >
                     Quản lí văn bằng
@@ -55,7 +55,7 @@ export function Header() {
                 </li>
                 <li className={cx('nav-item', 'main-nav__item')}>
                   <Link
-                    to="/admins"
+                    to="/admins/users"
                     className={cx('nav-link', 'main-nav__item-link')}
                   >
                     Quản lí người dùng

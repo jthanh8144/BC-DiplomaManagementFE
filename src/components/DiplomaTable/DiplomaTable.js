@@ -5,7 +5,7 @@ import { DiplomaTableItem } from './DiplomaTableItem';
 
 const cx = classNames.bind(styles);
 
-export function DiplomaTable({ diplomas, isAdmin = false }) {
+export function DiplomaTable({ diplomas, isAdmin = true }) {
   return (
     <div className={cx('main-content__table')}>
       <table className="table text-center">
