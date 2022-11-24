@@ -1,18 +1,19 @@
+import { useContext } from 'react';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
 
 import styles from './Diplomas.module.scss';
 import { DiplomaTable } from '~/components/DiplomaTable/DiplomaTable';
-import { ModalForm } from '~/components/Modal';
+import { DataContext } from '~/contexts/DataContext';
 
 const cx = classNames.bind(styles);
 
-const diplomas = [{}];
+const diploma = { name: 'vvv', status: true };
 
 export function Diplomas() {
-  const [isShow, setIsShow] = useState(false)
+  const { setDiploma } = useContext(DataContext);
+
   const handleClick = () => {
-    setIsShow(!isShow)
+    setDiploma(diploma);
   };
 
   return (
@@ -27,10 +28,15 @@ export function Diplomas() {
           <i className="fa-solid fa-plus"></i>
           Thêm văn bằng
         </button>
-        <button className="btn btn-danger" onClick={handleClick}>
+        <button
+          type="button"
+          className="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#modal-info"
+          onClick={handleClick}
+        >
           Sửa văn bằng
         </button>
-        {isShow && <ModalForm/>}
         <div className={cx('main-content__top-search')}>
           <input
             type="text"

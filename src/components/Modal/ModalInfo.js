@@ -1,10 +1,15 @@
+import { useContext } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Modal.module.scss';
+import { DataContext } from '~/contexts/DataContext';
+import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 
-export function ModalInfo({ diploma }) {
+export function ModalInfo() {
+  const { diploma } = useContext(DataContext);
+
   return (
     <div
       className="modal fade"
@@ -31,31 +36,33 @@ export function ModalInfo({ diploma }) {
                   Họ và tên:
                 </div>
                 <div className={cx('col-3', 'modal-section__info')}>
-                  Võ Văn Thành
+                  {diploma?.name}
                 </div>
                 <div className={cx('col-1', 'modal-section__label')}>
                   Ngày sinh:
                 </div>
                 <div className={cx('col-3', 'modal-section__info')}>
-                  01/11/2001
+                  {diploma?.birthday}
                 </div>
                 <div className={cx('col-1', 'modal-section__label')}>
                   Giới tính:
                 </div>
-                <div className={cx('col-3', 'modal-section__info')}>Nam</div>
+                <div className={cx('col-3', 'modal-section__info')}>
+                  {diploma?.gender}
+                </div>
               </div>
             </form>
             <form className={cx('modal-section__form')}>
               <div className={cx('modal-section__wrap')}>
                 <p className={cx('modal-section__title')}>Thông tin văn bằng</p>
-                {/* <span
+                <span
                   className={cx('badge', {
-                    'bg-success': diploma.status,
-                    'bg-danger': !diploma.status,
+                    'bg-success': diploma?.status,
+                    'bg-danger': !diploma?.status,
                   })}
                 >
-                  Đã xác nhận
-                </span> */}
+                  {diploma?.status === true ? 'Đã xác nhận' : 'Chưa xác nhận'}
+                </span>
               </div>
               <div className="row g-3 align-items-center">
                 <div className="col-6">
@@ -64,7 +71,7 @@ export function ModalInfo({ diploma }) {
                       Số hiệu bằng:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      ABC-123-XYZ
+                      {diploma?.code}
                     </div>
                   </div>
                   <div className="row">
@@ -72,7 +79,7 @@ export function ModalInfo({ diploma }) {
                       Loại bằng:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      Đại học
+                      {diploma?.name}
                     </div>
                   </div>
                   <div className="row">
@@ -80,7 +87,7 @@ export function ModalInfo({ diploma }) {
                       Chuyên ngành:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      Công nghệ thông tin
+                      {diploma?.name}
                     </div>
                   </div>
                   <div className="row">
@@ -88,7 +95,7 @@ export function ModalInfo({ diploma }) {
                       Hình thức đào tạo:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      Chính quy
+                      {diploma?.name}
                     </div>
                   </div>
                 </div>
@@ -98,7 +105,7 @@ export function ModalInfo({ diploma }) {
                       Trường:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      ABC-123-XYZ
+                      {diploma?.school}
                     </div>
                   </div>
                   <div className="row">
@@ -106,7 +113,7 @@ export function ModalInfo({ diploma }) {
                       Năm tốt nghiệp:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      2023
+                      {diploma?.year}
                     </div>
                   </div>
                   <div className="row">
@@ -114,7 +121,7 @@ export function ModalInfo({ diploma }) {
                       Xếp loại:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      Giỏi
+                      {diploma?.rank}
                     </div>
                   </div>
                   <div className="row">
@@ -122,7 +129,7 @@ export function ModalInfo({ diploma }) {
                       Số vào sổ:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      HX-86-5301
+                      {diploma?.regNo}
                     </div>
                   </div>
                 </div>
@@ -131,7 +138,11 @@ export function ModalInfo({ diploma }) {
                 <div className="col-12">
                   <div className={cx('modal-section__form-preview')}>
                     <img
-                      src={'./placeholder.png'}
+                      src={
+                        diploma?.urlImage
+                          ? diploma.urlImage
+                          : images.imagePlaceholder
+                      }
                       alt="preview"
                       className={cx('modal-section__form-img')}
                     />

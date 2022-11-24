@@ -5,13 +5,13 @@ import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 
-export function ModalForm() {
+export function ModalCreate() {
   return (
     <div
       className="modal fade"
       id="modal-form"
       tabIndex="-1"
-      // aria-hidden="true"
+      aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-scrollable modal-xl">
         <div className="modal-content">
