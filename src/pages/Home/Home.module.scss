@@ -1,0 +1,66 @@
+.home {
+  &-container {
+    background-image: url('../../assets/images/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 78vh;
+    height: 100vh;
+  }
+
+  &-wraper {
+    padding-top: 3vh;
+
+    &__image {
+      height: 300px;
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+  }
+
+  &-logo {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 10px 0 10px 0;
+  }
+
+  &-link {
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.home-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    font-size: 24px;
+    font-weight: 500;
+    padding: 16px 0;
+  }
+
+  &__input {
+    display: flex;
+    align-items: center;
+
+    & span {
+      padding: 0 10px;
+    }
+  }
+
+  &__btn {
+    width: 300px;
+    margin-left: 10px;
+
+    & i {
+      margin-right: 10px;
+    }
+  }
+}
