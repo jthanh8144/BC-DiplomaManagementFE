@@ -3,6 +3,7 @@
   padding: 14px;
   background-color: #fff;
   border-radius: 5px;
+  height: calc(100vh - (70px + 24px + 24px));
 
   &__top {
     display: flex;
@@ -41,8 +42,4 @@
   &:hover {
     background-color: #e4e5e5;
   }
-}
-
-.main-content {
-  height: calc(100vh - (70px + 24px + 24px));
 }

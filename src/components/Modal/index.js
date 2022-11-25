@@ -1,3 +1,5 @@
 export * from './ModalCreate'
 export * from './ModalUpdate'
 export * from './ModalInfo'
+export * from './ModalAdmin'
+export * from './ModalLogin'

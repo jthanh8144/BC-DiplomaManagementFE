@@ -2,19 +2,19 @@ import { useContext } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from '../Admin.module.scss';
-import { DiplomaTable } from '~/components/Table';
+import { AdminTable } from '~/components/Table';
 import { DataContext } from '~/contexts/DataContext';
-import { ModalCreate, ModalInfo, ModalUpdate } from '~/components/Modal';
+import { ModalAdmin } from '~/components/Modal';
 
 const cx = classNames.bind(styles);
 
-const diploma = { name: 'vvv', status: true };
+const admin = { username: 'jthanh8144', role: 'superadmin' };
 
-export function Diplomas() {
-  const { setDiploma } = useContext(DataContext);
+export function AdminUsers() {
+  const { setAdmin } = useContext(DataContext);
 
   const handleClick = () => {
-    setDiploma(diploma);
+    setAdmin(admin);
   };
 
   return (
@@ -25,24 +25,24 @@ export function Diplomas() {
             type="button"
             className="btn btn-danger"
             data-bs-toggle="modal"
-            data-bs-target="#modal-form"
+            data-bs-target="#modal-admin"
           >
             <i className="fa-solid fa-plus"></i>
-            Thêm văn bằng
+            Thêm người quản lí
           </button>
           <button
             type="button"
             className="btn btn-danger"
             data-bs-toggle="modal"
-            data-bs-target="#modal-info"
+            data-bs-target="#modal-admin"
             onClick={handleClick}
           >
-            Sửa văn bằng
+            Sửa
           </button>
           <div className={cx('main-content__top-search')}>
             <input
               type="text"
-              placeholder="Tìm kiếm văn bằng"
+              placeholder="Tìm kiếm người quản lí"
               className={cx('form-control', 'search-input')}
             />
             <span className={cx('search-btn')}>
@@ -50,11 +50,9 @@ export function Diplomas() {
             </span>
           </div>
         </div>
-        <DiplomaTable diplomas={[{ id: 1 }, { id: 2 }]} />
+        <AdminTable admins={[{ id: 1 }, { id: 2 }]} />
       </main>
-      <ModalCreate />
-      <ModalUpdate />
-      <ModalInfo />
+      <ModalAdmin />
     </>
   );
 }

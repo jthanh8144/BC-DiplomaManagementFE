@@ -14,20 +14,20 @@ export function Header() {
   const { user, logoutUser } = useContext(AuthContext);
 
   useEffect(() => {
-      if (user) {
-          (async () => {
-              try {
-                  // const response = await userApi.get();
-              } catch (error) {
-                  if (error.response.status === 401) {
-                      logoutUser();
-                      alert("Bạn chưa đăng nhập");
-                      navigate("/");
-                  }
-              }
-          })();
-      }
-      // eslint-disable-next-line
+    if (user) {
+      (async () => {
+        try {
+          // const response = await userApi.get();
+        } catch (error) {
+          if (error.response.status === 401) {
+            logoutUser();
+            alert('Bạn chưa đăng nhập');
+            navigate('/');
+          }
+        }
+      })();
+    }
+    // eslint-disable-next-line
   }, [user]);
 
   return (
@@ -65,7 +65,7 @@ export function Header() {
             )}
           </ul>
           <ul className="navbar-nav mb-2 mb-lg-0">
-            <li className="nav-item dropdown">
+            <li className={cx('nav-item', { dropdown: !!user })}>
               {!!user ? (
                 <div className={cx('main-nav__avatar')}>
                   <img
@@ -109,7 +109,12 @@ export function Header() {
                   </ul>
                 </div>
               ) : (
-                <Link to="/login" className={cx('main-nav__link')}>
+                <Link
+                  className={cx('main-nav__link')}
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-login"
+                >
                   Đăng nhập
                 </Link>
               )}

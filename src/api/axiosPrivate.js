@@ -14,7 +14,7 @@ axiosPrivate.interceptors.request.use(async (config) => {
     ? localStorage.getItem('authTokens')
     : null;
   if (authTokens) {
-    config.headers.Authorization = `Bearer ${authTokens}`;
+    config.headers['Authorization'] = `Bearer ${authTokens}`;
   }
   return config;
 });

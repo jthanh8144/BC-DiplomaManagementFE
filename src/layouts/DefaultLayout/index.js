@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { AuthContext } from '~/contexts/AuthContext';
 import { Header } from '~/components/Header';
-import { ModalCreate, ModalInfo, ModalUpdate } from '~/components/Modal';
+import { ModalLogin } from '~/components/Modal';
 
 export function DefaultLayout({ children }) {
   const { user } = useContext(AuthContext);
@@ -13,12 +13,8 @@ export function DefaultLayout({ children }) {
         <Header />
         {children}
       </div>
-      {!false === true && (
-        <>
-          <ModalCreate />
-          <ModalUpdate />
-          <ModalInfo />
-        </>
+      {!true === false && (
+        <ModalLogin />
       )}
     </>
   );

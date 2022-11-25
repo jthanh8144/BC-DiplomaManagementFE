@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 
-import styles from './DiplomaTable.module.scss';
+import styles from '../Table.module.scss';
 import { DiplomaTableItem } from './DiplomaTableItem';
 
 const cx = classNames.bind(styles);

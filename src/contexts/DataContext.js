@@ -4,10 +4,13 @@ const DataContext = createContext();
 
 function DataProvider({ children }) {
   const [diploma, setDiploma] = useState(null);
+  const [admin, setAdmin] = useState(null);
 
   const contextData = {
     diploma,
     setDiploma,
+    admin,
+    setAdmin,
   };
 
   return (

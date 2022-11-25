@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '~/contexts/AuthContext';
 import { DataProvider } from '~/contexts/DataContext';
 import { publicRoutes, privateRoutes } from '~/routes';
-import { DefaultLayout } from '~/layouts/DefaultLayout';
+import { DefaultLayout } from '~/layouts';
 import { ScrollToTop } from '~/components/ScrollToTop';
 
 function App() {
