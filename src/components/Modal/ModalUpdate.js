@@ -1,19 +1,88 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Modal.module.scss';
 import images from '~/assets/images';
 import { DataContext } from '~/contexts/DataContext';
+import { diplomaApi } from '~/api/diplomaApi';
 
 const cx = classNames.bind(styles);
 
 export function ModalUpdate() {
   const { diploma } = useContext(DataContext);
 
-  const handleChangeRadio = (e) => {
-    console.log(e.target.value);
+  const [fullName, setFullName] = useState(diploma.fullName);
+  const [dateOfBirth, setDateOfBirth] = useState(diploma.dateOfBirth);
+  const [gender, setGender] = useState(diploma.gender);
+  const [code, setCode] = useState(diploma.code);
+  const [certificate, setCertificate] = useState(diploma.certificate);
+  const [status, setStatus] = useState(diploma.status);
+  const [speciality, setSpeciality] = useState(diploma.speciality);
+  const [modeOfStudy, setModeOfStudy] = useState('');
+  const [school, setSchool] = useState(diploma.school);
+  const [graduationYear, setGraduationYear] = useState(diploma.graduationYear);
+  const [rank, setRank] = useState(diploma.rank);
+  const [regNo, setRegNo] = useState(diploma.regNo);
+  const [preview, setPreview] = useState(diploma.urlImage);
+  const [image, setImage] = useState();
+
+  const onSelectImage = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setImage(undefined);
+      return;
+    }
+    setImage(e.target.files[0]);
+    const url = URL.createObjectURL(e.target.files[0]);
+    setPreview(url);
   };
-  
+
+  const handleSubmit = () => {
+    if (
+      code &&
+      fullName &&
+      dateOfBirth &&
+      gender &&
+      certificate &&
+      speciality &&
+      graduationYear &&
+      school &&
+      rank &&
+      modeOfStudy &&
+      regNo &&
+      preview &&
+      status
+    ) {
+      (async () => {
+        try {
+          let url = diploma.urlImage;
+          if (preview !== url) {
+            const formData = new FormData();
+            formData.append('image', image);
+            const res = await diplomaApi.uploadImage(formData);
+            url = res.url;
+          }
+          await diplomaApi.update(code, {
+            fullName,
+            dateOfBirth,
+            gender,
+            certificate,
+            speciality,
+            graduationYear,
+            school,
+            rank,
+            modeOfStudy,
+            regNo,
+            urlImage: url,
+            status,
+          });
+        } catch (error) {
+          console.log(error);
+          alert('Có lỗi xảy ra, vui lòng thử lại sau!');
+        }
+      })();
+    }
+  };
+
   return (
     <div
       className="modal fade"
@@ -37,29 +106,31 @@ export function ModalUpdate() {
               <p className={cx('modal-section__title')}>Thông tin cá nhân</p>
               <div className="row g-3 align-items-center">
                 <div className="col-auto">
-                  <label htmlFor="full-name" className="col-form-label">
+                  <label htmlFor="full-name-1" className="col-form-label">
                     Họ và tên
                   </label>
                 </div>
                 <div className="col-auto">
                   <input
                     type="text"
-                    id="full-name"
+                    id="full-name-1"
                     className="form-control"
-                    value={diploma?.name}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                   />
                 </div>
                 <div className="col-auto">
-                  <label htmlFor="date-of-birth" className="col-form-label">
+                  <label htmlFor="date-of-birth-1" className="col-form-label">
                     Ngày sinh
                   </label>
                 </div>
                 <div className="col-auto">
                   <input
                     type="date"
-                    id="date-of-birth"
+                    id="date-of-birth-1"
                     className="form-control"
-                    value={diploma?.birthday}
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
                   />
                 </div>
                 <div className="col-auto">
@@ -67,20 +138,16 @@ export function ModalUpdate() {
                     Giới tính
                   </label>
                 </div>
-                <div
-                  className="col-auto"
-                  onChange={(e) => handleChangeRadio(e)}
-                >
+                <div className="col-auto">
                   <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      id="inlineRadio1"
-                      value="nam"
-                      checked={
-                        diploma?.gender ? diploma?.gender === 'nam' : true
-                      }
+                      id="inlineRadio1-1"
+                      value="Nam"
+                      checked={gender === 'Nam'}
+                      onChange={(e) => setGender(e.target.value)}
                     />
                     <label className="form-check-label" htmlFor="inlineRadio1">
                       Nam
@@ -91,9 +158,10 @@ export function ModalUpdate() {
                       className="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
-                      id="inlineRadio2"
-                      value="nữ"
-                      // checked={diploma?.gender === 'nữ'}
+                      id="inlineRadio2-1"
+                      value="Nữ"
+                      checked={gender === 'Nữ'}
+                      onChange={(e) => setGender(e.target.value)}
                     />
                     <label className="form-check-label" htmlFor="inlineRadio2">
                       Nữ
@@ -106,32 +174,38 @@ export function ModalUpdate() {
               <p className={cx('modal-section__title')}>Thông tin văn bằng</p>
               <div className="row g-3 align-items-center">
                 <div className="col-4">
-                  <label htmlFor="code" className="col-form-label">
+                  <label htmlFor="code-1" className="col-form-label">
                     Số hiệu bằng
                   </label>
                   <input
                     type="text"
-                    id="code"
+                    id="code-1"
                     className="form-control"
-                    value={diploma?.code}
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
                   />
                 </div>
                 <div className="col-6">
-                  <label htmlFor="certificate" className="col-form-label">
+                  <label htmlFor="certificate-1" className="col-form-label">
                     Loại bằng
                   </label>
                   <input
                     type="text"
-                    id="certificate"
+                    id="certificate-1"
                     className="form-control"
-                    value={diploma?.name}
+                    value={certificate}
+                    onChange={(e) => setCertificate(e.target.value)}
                   />
                 </div>
                 <div className="col-2">
                   <label htmlFor="status" className="col-form-label">
                     Trạng thái
                   </label>
-                  <select className="form-select" value={diploma?.status}>
+                  <select
+                    className="form-select"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
                     <option value="false">Chưa xác nhận</option>
                     <option value="true">Đã xác nhận</option>
                   </select>
@@ -139,71 +213,80 @@ export function ModalUpdate() {
               </div>
               <div className="row g-3 align-items-center">
                 <div className="col-6">
-                  <label htmlFor="speciality" className="col-form-label">
+                  <label htmlFor="speciality-1" className="col-form-label">
                     Chuyên ngành
                   </label>
                   <input
                     type="text"
-                    id="speciality"
+                    id="speciality-1"
                     className="form-control"
-                    value={diploma?.name}
+                    value={speciality}
+                    onChange={(e) => setSpeciality(e.target.value)}
                   />
                 </div>
                 <div className="col-6">
-                  <label htmlFor="modeOfStudy" className="col-form-label">
+                  <label htmlFor="modeOfStudy-1" className="col-form-label">
                     Loại hình đào tạo
                   </label>
                   <input
                     type="text"
-                    id="modeOfStudy"
+                    id="modeOfStudy-1"
                     className="form-control"
-                    value={diploma?.name}
+                    value={modeOfStudy}
+                    onChange={(e) => setModeOfStudy(e.target.value)}
                   />
                 </div>
               </div>
               <div className="row g-3 align-items-center">
                 <div className="col-6">
-                  <label htmlFor="school" className="col-form-label">
+                  <label htmlFor="school-1" className="col-form-label">
                     Trường
                   </label>
                   <input
                     type="text"
-                    id="school"
+                    id="school-1"
                     className="form-control"
-                    value={diploma?.school}
+                    value={school}
+                    onChange={(e) => setSchool(e.target.value)}
                   />
                 </div>
                 <div className="col-2">
-                  <label htmlFor="graduationYear" className="col-form-label">
+                  <label htmlFor="graduationYear-1" className="col-form-label">
                     Năm tốt nghiệp
                   </label>
                   <input
                     type="text"
-                    id="graduationYear"
+                    id="graduationYear-1"
                     className="form-control"
-                    value={diploma?.graduateYear}
+                    value={graduationYear}
+                    onChange={(e) => setGraduationYear(e.target.value)}
                   />
                 </div>
                 <div className="col-2">
                   <label htmlFor="" className="col-form-label">
                     Xếp loại
                   </label>
-                  <select className="form-select" value={diploma?.rank || '1'}>
-                    <option value="0">Xuất sắc</option>
-                    <option value="1">Giỏi</option>
-                    <option value="2">Khá</option>
-                    <option value="3">Trung bình</option>
+                  <select
+                    className="form-select"
+                    value={rank}
+                    onChange={(e) => setRank(e.target.value)}
+                  >
+                    <option value="Xuất sắc">Xuất sắc</option>
+                    <option value="Giỏi">Giỏi</option>
+                    <option value="Khá">Khá</option>
+                    <option value="Trung bình">Trung bình</option>
                   </select>
                 </div>
                 <div className="col-2">
-                  <label htmlFor="regNo" className="col-form-label">
+                  <label htmlFor="regNo-1" className="col-form-label">
                     Số vào sổ
                   </label>
                   <input
                     type="text"
-                    id="regNo"
+                    id="regNo-1"
                     className="form-control"
-                    value={diploma?.regNo}
+                    value={regNo}
+                    onChange={(e) => setRegNo(e.target.value)}
                   />
                 </div>
               </div>
@@ -211,7 +294,7 @@ export function ModalUpdate() {
                 <div className="col-12">
                   <div className="row mb-2">
                     <div className="col-2">
-                      <label htmlFor="school" className="col-form-label">
+                      <label htmlFor="diploma-image" className="col-form-label">
                         Ảnh văn bằng
                       </label>
                     </div>
@@ -219,18 +302,15 @@ export function ModalUpdate() {
                       <input
                         type="file"
                         accept="image/png, image/jpeg"
-                        id="school"
+                        id="diploma-image"
                         className="form-control"
+                        onChange={onSelectImage}
                       />
                     </div>
                   </div>
                   <div className={cx('modal-section__form-preview')}>
                     <img
-                      src={
-                        diploma?.urlImage
-                          ? diploma.urlImage
-                          : images.imagePlaceholder
-                      }
+                      src={preview || images.imagePlaceholder}
                       alt="preview"
                       className={cx('modal-section__form-img')}
                     />
@@ -240,7 +320,11 @@ export function ModalUpdate() {
             </form>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-danger">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleSubmit}
+            >
               Hoàn thành
             </button>
           </div>

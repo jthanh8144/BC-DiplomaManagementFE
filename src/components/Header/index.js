@@ -5,19 +5,20 @@ import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import { AuthContext } from '~/contexts/AuthContext';
+import { userApi } from '~/api/userApi';
 
 const cx = classNames.bind(styles);
 
 export function Header() {
-  const navigate = useNavigate();
-
-  const { user, logoutUser } = useContext(AuthContext);
+  const navigate = useNavigate()
+  const { user, logoutUser, setIsSuperAdmin } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
       (async () => {
         try {
-          // const response = await userApi.get();
+          const res = await userApi.profile();
+          setIsSuperAdmin(res.role)
         } catch (error) {
           if (error.response.status === 401) {
             logoutUser();
@@ -28,7 +29,7 @@ export function Header() {
       })();
     }
     // eslint-disable-next-line
-  }, [user]);
+  }, []);
 
   return (
     <nav
@@ -81,7 +82,7 @@ export function Header() {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    Admin
+                    {user}
                   </Link>
                   <ul
                     className="dropdown-menu"

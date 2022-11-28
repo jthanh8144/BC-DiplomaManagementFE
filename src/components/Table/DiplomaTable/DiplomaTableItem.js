@@ -1,10 +1,37 @@
+import { useContext } from 'react';
 import classNames from 'classnames';
+
+import { DataContext } from '~/contexts/DataContext';
+import { diplomaApi } from '~/api/diplomaApi';
 
 export function DiplomaTableItem({
   diploma,
   isAdmin = false,
   isSuperAdmin = false,
 }) {
+  const { setDiploma } = useContext(DataContext);
+
+  const handleClick = async () => {
+    try {
+      const response = await diplomaApi.getByCode(diploma.code);
+      setDiploma(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Bạn cho chắc sẽ xoá văn bằng này chứ?') === true) {
+      try {
+        await diplomaApi.delete(diploma.code);
+        alert('Xoá văn bằng thành công!');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <tr>
       <td>{diploma.id}</td>
@@ -26,12 +53,25 @@ export function DiplomaTableItem({
           {diploma.status ? 'Đã xác nhận' : 'Chưa xác nhận'}
         </span>
       </td>
-      {isAdmin && (
-        <td>
-          <i className="fa-solid fa-pen"></i>
-          {isSuperAdmin && <i className="fa-solid fa-trash"></i>}
-        </td>
-      )}
+      <td>
+        <i
+          className="fa-solid fa-eye"
+          onClick={handleClick}
+          data-bs-toggle="modal"
+          data-bs-target="#modal-info"
+        ></i>
+        {isAdmin && (
+          <i
+            className="fa-solid fa-pen"
+            onClick={handleClick}
+            data-bs-toggle="modal"
+            data-bs-target="#modal-update"
+          ></i>
+        )}
+        {isAdmin && isSuperAdmin && (
+          <i className="fa-solid fa-trash" onClick={handleDelete}></i>
+        )}
+      </td>
     </tr>
   );
 }

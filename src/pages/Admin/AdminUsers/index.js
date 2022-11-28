@@ -1,21 +1,26 @@
-import { useContext } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from '../Admin.module.scss';
 import { AdminTable } from '~/components/Table';
-import { DataContext } from '~/contexts/DataContext';
 import { ModalAdmin } from '~/components/Modal';
+import { userApi } from '~/api/userApi';
 
 const cx = classNames.bind(styles);
 
-const admin = { username: 'jthanh8144', role: 'superadmin' };
-
 export function AdminUsers() {
-  const { setAdmin } = useContext(DataContext);
+  const [admins, setAdmins] = useState([]);
 
-  const handleClick = () => {
-    setAdmin(admin);
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await userApi.getAll();
+        setAdmins(response);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -30,16 +35,7 @@ export function AdminUsers() {
             <i className="fa-solid fa-plus"></i>
             Thêm người quản lí
           </button>
-          <button
-            type="button"
-            className="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#modal-admin"
-            onClick={handleClick}
-          >
-            Sửa
-          </button>
-          <div className={cx('main-content__top-search')}>
+          {/* <div className={cx('main-content__top-search')}>
             <input
               type="text"
               placeholder="Tìm kiếm người quản lí"
@@ -48,9 +44,9 @@ export function AdminUsers() {
             <span className={cx('search-btn')}>
               <i className="fa-solid fa-magnifying-glass"></i>
             </span>
-          </div>
+          </div> */}
         </div>
-        <AdminTable admins={[{ id: 1 }, { id: 2 }]} />
+        <AdminTable admins={admins} />
       </main>
       <ModalAdmin />
     </>

@@ -1,4 +1,52 @@
+import { useState, useEffect } from 'react';
+
+import { userApi } from '~/api/userApi';
+
 export function ModalAdmin({ admin }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('role');
+
+  useEffect(() => {
+    if (!!admin) {
+      setUsername(admin.username);
+      setRole(admin.role);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClick = () => {
+    if (!!admin) {
+      handleUpdate();
+    } else {
+      handleCreate();
+    }
+  };
+
+  const handleCreate = () => {
+    if (username && password && role) {
+      (async () => {
+        try {
+          await userApi.register({ username, password, role });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  };
+
+  const handleUpdate = () => {
+    if (password || role !== admin.role) {
+      (async () => {
+        try {
+          await userApi.update(admin.id, { password, role });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  };
+
   return (
     <div
       className="modal fade"
@@ -29,6 +77,9 @@ export function ModalAdmin({ admin }) {
                   type="text"
                   className="form-control"
                   id="admin-username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  readOnly={!!admin}
                 />
               </div>
               <div className="mb-3">
@@ -39,13 +90,20 @@ export function ModalAdmin({ admin }) {
                   type="password"
                   className="form-control"
                   id="admin-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="mb-3">
                 <label htmlFor="admin-role" className="col-form-label">
                   Loại tài khoản
                 </label>
-                <select className="form-control" id="admin-role">
+                <select
+                  className="form-control"
+                  id="admin-role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
                   <option value="admin">Admin</option>
                   <option value="superadmin">Super Admin</option>
                 </select>
@@ -60,7 +118,11 @@ export function ModalAdmin({ admin }) {
             >
               Huỷ
             </button>
-            <button type="button" className="btn btn-danger">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleClick}
+            >
               {!!admin ? 'Lưu thay đổi' : 'Thêm'}
             </button>
           </div>

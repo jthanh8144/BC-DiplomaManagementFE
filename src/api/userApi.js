@@ -11,7 +11,23 @@ export const userApi = {
     return axiosPrivate.post(url, data);
   },
   profile: () => {
+    const url = '/admins/profile';
+    return axiosPrivate.get(url);
+  },
+  getAll: () => {
     const url = '/admins';
     return axiosPrivate.get(url);
+  },
+  getById: (id) => {
+    const url = `/admins/${id}`;
+    return axiosPrivate.get(url);
+  },
+  update: (id, data) => {
+    const url = `/admins/${id}`;
+    return axiosPrivate.put(url, data);
+  },
+  delete: (id) => {
+    const url = `/admins/${id}`;
+    return axiosPrivate.delete(url);
   },
 };

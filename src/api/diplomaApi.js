@@ -1,6 +1,11 @@
+import { axiosPublic } from './axiosPublic';
 import { axiosPrivate } from './axiosPrivate';
 
 export const diplomaApi = {
+  search: (name) => {
+    const url = '/diplomas';
+    return axiosPublic.get(url, { params: { name } });
+  },
   getAll: () => {
     const url = '/diplomas';
     return axiosPrivate.get(url);
@@ -20,5 +25,15 @@ export const diplomaApi = {
   delete: (code) => {
     const url = `/diplomas/${code}`;
     return axiosPrivate.delete(url);
+  },
+  sync: () => {
+    const url = '/diplomas/sync';
+    return axiosPrivate.get(url);
+  },
+  uploadImage: (data) => {
+    const url = '/upload';
+    return axiosPrivate.post(url, data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   },
 };

@@ -13,6 +13,8 @@ function AuthProvider({ children }) {
     localStorage.getItem('user') ? localStorage.getItem('user') : null
   );
 
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+
   const loginUser = (token, user) => {
     setAuthTokens(token);
     setUser(user);
@@ -25,6 +27,7 @@ function AuthProvider({ children }) {
     setUser(null);
     localStorage.removeItem('authTokens');
     localStorage.removeItem('user');
+    setIsSuperAdmin(false);
   };
 
   const contextData = {
@@ -34,6 +37,8 @@ function AuthProvider({ children }) {
     setAuthTokens,
     loginUser,
     logoutUser,
+    isSuperAdmin,
+    setIsSuperAdmin,
   };
 
   return (
