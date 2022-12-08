@@ -5,7 +5,7 @@ const DataContext = createContext();
 function DataProvider({ children }) {
   const [diploma, setDiploma] = useState(null);
   const [admin, setAdmin] = useState(null);
-  const [searchDiplomas, setSearchDiplomas] = useState(null);
+  const [searchDiplomas, setSearchDiplomas] = useState([]);
 
   const contextData = {
     diploma,

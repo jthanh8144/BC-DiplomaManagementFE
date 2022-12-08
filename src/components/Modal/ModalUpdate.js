@@ -11,19 +11,21 @@ const cx = classNames.bind(styles);
 export function ModalUpdate() {
   const { diploma } = useContext(DataContext);
 
-  const [fullName, setFullName] = useState(diploma.fullName);
-  const [dateOfBirth, setDateOfBirth] = useState(diploma.dateOfBirth);
-  const [gender, setGender] = useState(diploma.gender);
-  const [code, setCode] = useState(diploma.code);
-  const [certificate, setCertificate] = useState(diploma.certificate);
-  const [status, setStatus] = useState(diploma.status);
-  const [speciality, setSpeciality] = useState(diploma.speciality);
+  const [fullName, setFullName] = useState(diploma?.fullName || '');
+  const [dateOfBirth, setDateOfBirth] = useState(diploma?.dateOfBirth || '');
+  const [gender, setGender] = useState(diploma?.gender || '');
+  const [code, setCode] = useState(diploma?.code || '');
+  const [certificate, setCertificate] = useState(diploma?.certificate || '');
+  const [status, setStatus] = useState(diploma?.status || '');
+  const [speciality, setSpeciality] = useState(diploma?.speciality || '');
   const [modeOfStudy, setModeOfStudy] = useState('');
-  const [school, setSchool] = useState(diploma.school);
-  const [graduationYear, setGraduationYear] = useState(diploma.graduationYear);
-  const [rank, setRank] = useState(diploma.rank);
-  const [regNo, setRegNo] = useState(diploma.regNo);
-  const [preview, setPreview] = useState(diploma.urlImage);
+  const [school, setSchool] = useState(diploma?.school || '');
+  const [graduationYear, setGraduationYear] = useState(
+    diploma?.graduationYear || ''
+  );
+  const [rank, setRank] = useState(diploma?.rank || '');
+  const [regNo, setRegNo] = useState(diploma?.regNo || '');
+  const [preview, setPreview] = useState(diploma?.urlImage || '');
   const [image, setImage] = useState();
 
   const onSelectImage = (e) => {

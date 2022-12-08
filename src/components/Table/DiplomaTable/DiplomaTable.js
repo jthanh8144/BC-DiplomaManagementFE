@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from '../Table.module.scss';
@@ -6,6 +7,9 @@ import { DiplomaTableItem } from './DiplomaTableItem';
 const cx = classNames.bind(styles);
 
 export function DiplomaTable({ diplomas, isAdmin = true, isSuperAdmin }) {
+  // useEffect(() => {
+  //   console.log(diplomas);
+  // }, [diplomas]);
   return (
     <div className={cx('main-content__table')}>
       <table className="table text-center">
@@ -26,12 +30,13 @@ export function DiplomaTable({ diplomas, isAdmin = true, isSuperAdmin }) {
         </thead>
         <tbody className={cx('main-content__data')}>
           {diplomas.length > 0 ? (
-            diplomas.map((diploma) => (
+            diplomas.map((diploma, index) => (
               <DiplomaTableItem
+                index={index + 1}
                 diploma={diploma}
                 isAdmin={isAdmin}
                 isSuperAdmin={isSuperAdmin}
-                key={diploma.id}
+                key={index}
               />
             ))
           ) : (

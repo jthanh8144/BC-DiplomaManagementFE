@@ -3,12 +3,12 @@ import classNames from 'classnames/bind';
 
 import styles from './Search.module.scss';
 import { DiplomaTable } from '~/components/Table';
-import { AuthContext } from '~/contexts/AuthContext';
+import { DataContext } from '~/contexts/DataContext';
 
 const cx = classNames.bind(styles);
 
 export function Search() {
-  const { searchDiplomas } = useContext(AuthContext);
+  const { searchDiplomas } = useContext(DataContext);
   
   return (
     <main className={cx('main-content')}>

@@ -2,9 +2,9 @@ import { axiosPublic } from './axiosPublic';
 import { axiosPrivate } from './axiosPrivate';
 
 export const diplomaApi = {
-  search: (name) => {
+  search: (data) => {
     const url = '/diplomas';
-    return axiosPublic.get(url, { params: { name } });
+    return axiosPublic.get(url, { params: data });
   },
   getAll: () => {
     const url = '/diplomas';

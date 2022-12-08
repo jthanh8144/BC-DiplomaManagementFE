@@ -5,6 +5,7 @@ import { DataContext } from '~/contexts/DataContext';
 import { diplomaApi } from '~/api/diplomaApi';
 
 export function DiplomaTableItem({
+  index = 1,
   diploma,
   isAdmin = false,
   isSuperAdmin = false,
@@ -14,6 +15,7 @@ export function DiplomaTableItem({
   const handleClick = async () => {
     try {
       const response = await diplomaApi.getByCode(diploma.code);
+      console.log(response);
       setDiploma(response);
     } catch (error) {
       console.log(error);
@@ -34,7 +36,7 @@ export function DiplomaTableItem({
 
   return (
     <tr>
-      <td>{diploma.id}</td>
+      <td>{index}</td>
       <td>{diploma.fullName}</td>
       <td>{diploma.dateOfBirth}</td>
       <td>{diploma.gender}</td>

@@ -10,7 +10,7 @@ import { userApi } from '~/api/userApi';
 const cx = classNames.bind(styles);
 
 export function Header() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user, logoutUser, setIsSuperAdmin } = useContext(AuthContext);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function Header() {
       (async () => {
         try {
           const res = await userApi.profile();
-          setIsSuperAdmin(res.role)
+          setIsSuperAdmin(res.role);
         } catch (error) {
           if (error.response.status === 401) {
             logoutUser();
@@ -99,10 +99,8 @@ export function Header() {
                     <li>
                       <Link
                         className="dropdown-item"
-                        to="#"
-                        onClick={() => {
-                          logoutUser();
-                        }}
+                        to="/"
+                        onClick={() => logoutUser()}
                       >
                         Đăng xuất
                       </Link>

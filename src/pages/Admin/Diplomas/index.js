@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from '../Admin.module.scss';
@@ -11,26 +12,40 @@ import { AuthContext } from '~/contexts/AuthContext';
 const cx = classNames.bind(styles);
 
 export function Diplomas() {
+  const navigate = useNavigate();
+
   const [diplomas, setDiplomas] = useState([{ id: 1 }, { id: 2 }]);
   const [searchValue, setSearchValue] = useState('');
-  
-  const { isSuperAdmin } = useContext(AuthContext);
 
-  const debouncedValue = useDebounce(searchValue, 500);
+  const { isSuperAdmin, logoutUser } = useContext(AuthContext);
+
+  const debouncedValue = useDebounce(searchValue, 200);
   const fetchDiplomas = async () => {
     try {
       const response = await diplomaApi.getAll();
       setDiplomas(response);
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 401) {
+        logoutUser();
+        alert('Bạn chưa đăng nhập');
+        navigate('/');
+      } else {
+        alert('Có lỗi xảy ra');
+      }
     }
   };
   const searchDiplomas = async () => {
     try {
-      const response = await diplomaApi.getAll();
+      const response = await diplomaApi.search({ name: debouncedValue });
       setDiplomas(response);
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 401) {
+        logoutUser();
+        alert('Bạn chưa đăng nhập');
+        navigate('/');
+      } else {
+        alert('Có lỗi xảy ra');
+      }
     }
   };
 

@@ -22,11 +22,18 @@ export function Home() {
   const handleSearch = async () => {
     if (fullName || code) {
       try {
-        const response = await diplomaApi.search({ fullName, code });
+        const data = {};
+        if (fullName) {
+          Object.assign(data, { name: fullName });
+        } else {
+          Object.assign(data, { code });
+        }
+        const response = await diplomaApi.search(data);
+        console.log(response);
         setSearchDiplomas(response);
         navigate('/diplomas');
       } catch (error) {
-        alert('Có lỗi xảy ra trong quá trình tìm kiếm!')
+        alert('Có lỗi xảy ra trong quá trình tìm kiếm!');
         console.log(error);
       }
     }

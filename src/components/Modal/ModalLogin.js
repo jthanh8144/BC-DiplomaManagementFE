@@ -1,6 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StatusCodes } from 'http-status-codes';
 
 import { AuthContext } from '~/contexts/AuthContext';
 import { userApi } from '~/api/userApi';
@@ -13,18 +12,24 @@ export function ModalLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const closeModal = useRef()
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (username && password) {
-      const response = await userApi.login({ username, password });
-      if (response.status === StatusCodes.OK) {
-        loginUser(response.accessToken, username)
-        const res = await userApi.profile()
-        setIsSuperAdmin(res.role === 'superadmin')
-        navigate('/admins/diplomas');
-      } else {
-        alert('Sai tài khoản hoặc mật khẩu!')
+    try {
+      if (username && password) {
+        const response = await userApi.login({ username, password });
+        if (response.accessToken) {
+          loginUser(response.accessToken, username);
+          const res = await userApi.profile();
+          setIsSuperAdmin(res.role === 'superadmin');
+          closeModal.current.click()
+          navigate('/admins/diplomas');
+        }
       }
+    } catch (error) {
+      console.log(error);
+      alert('Sai tài khoản hoặc mật khẩu!');
     }
   };
 
@@ -44,6 +49,7 @@ export function ModalLogin() {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              ref={closeModal}
             ></button>
           </div>
           <div className="modal-body">
