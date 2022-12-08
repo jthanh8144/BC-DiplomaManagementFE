@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Modal.module.scss';
@@ -11,22 +11,36 @@ const cx = classNames.bind(styles);
 export function ModalUpdate() {
   const { diploma } = useContext(DataContext);
 
-  const [fullName, setFullName] = useState(diploma?.fullName || '');
-  const [dateOfBirth, setDateOfBirth] = useState(diploma?.dateOfBirth || '');
-  const [gender, setGender] = useState(diploma?.gender || '');
-  const [code, setCode] = useState(diploma?.code || '');
-  const [certificate, setCertificate] = useState(diploma?.certificate || '');
-  const [status, setStatus] = useState(diploma?.status || '');
-  const [speciality, setSpeciality] = useState(diploma?.speciality || '');
+  const [fullName, setFullName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
+  const [code, setCode] = useState('');
+  const [certificate, setCertificate] = useState('');
+  const [status, setStatus] = useState('');
+  const [speciality, setSpeciality] = useState('');
   const [modeOfStudy, setModeOfStudy] = useState('');
-  const [school, setSchool] = useState(diploma?.school || '');
-  const [graduationYear, setGraduationYear] = useState(
-    diploma?.graduationYear || ''
-  );
-  const [rank, setRank] = useState(diploma?.rank || '');
-  const [regNo, setRegNo] = useState(diploma?.regNo || '');
-  const [preview, setPreview] = useState(diploma?.urlImage || '');
+  const [school, setSchool] = useState('');
+  const [graduationYear, setGraduationYear] = useState('');
+  const [rank, setRank] = useState('');
+  const [regNo, setRegNo] = useState('');
+  const [preview, setPreview] = useState('');
   const [image, setImage] = useState();
+
+  useEffect(() => {
+    setFullName(diploma?.fullName);
+    setDateOfBirth(diploma?.dateOfBirth);
+    setGender(diploma?.gender);
+    setCode(diploma?.code);
+    setCertificate(diploma?.certificate);
+    setStatus(diploma?.status);
+    setSpeciality(diploma?.speciality);
+    setModeOfStudy(diploma?.modeOfStudy);
+    setSchool(diploma?.school);
+    setGraduationYear(diploma?.graduationYear);
+    setRank(diploma?.rank);
+    setRegNo(diploma?.regNo);
+    setPreview(diploma?.urlImage);
+  }, [diploma]);
 
   const onSelectImage = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -43,7 +57,6 @@ export function ModalUpdate() {
       code &&
       fullName &&
       dateOfBirth &&
-      gender &&
       certificate &&
       speciality &&
       graduationYear &&
@@ -51,8 +64,7 @@ export function ModalUpdate() {
       rank &&
       modeOfStudy &&
       regNo &&
-      preview &&
-      status
+      preview
     ) {
       (async () => {
         try {
@@ -77,9 +89,15 @@ export function ModalUpdate() {
             urlImage: url,
             status,
           });
+          alert('Chỉnh sửa văn bằng thành công!');
+          window.location.reload(false);
         } catch (error) {
           console.log(error);
-          alert('Có lỗi xảy ra, vui lòng thử lại sau!');
+          if (error.response.status === 413) {
+            alert('Ảnh tải lên vượt quá 5MB');
+          } else {
+            alert('Có lỗi xảy ra, vui lòng thử lại sau!');
+          }
         }
       })();
     }
@@ -185,6 +203,7 @@ export function ModalUpdate() {
                     className="form-control"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
+                    readOnly={true}
                   />
                 </div>
                 <div className="col-6">

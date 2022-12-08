@@ -15,7 +15,6 @@ export function DiplomaTableItem({
   const handleClick = async () => {
     try {
       const response = await diplomaApi.getByCode(diploma.code);
-      console.log(response);
       setDiploma(response);
     } catch (error) {
       console.log(error);
@@ -28,6 +27,7 @@ export function DiplomaTableItem({
       try {
         await diplomaApi.delete(diploma.code);
         alert('Xoá văn bằng thành công!');
+        window.location.reload(false);
       } catch (error) {
         console.log(error);
       }

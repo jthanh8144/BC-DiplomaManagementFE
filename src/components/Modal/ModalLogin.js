@@ -22,6 +22,7 @@ export function ModalLogin() {
         if (response.accessToken) {
           loginUser(response.accessToken, username);
           const res = await userApi.profile();
+          console.log(res.role);
           setIsSuperAdmin(res.role === 'superadmin');
           closeModal.current.click()
           navigate('/admins/diplomas');

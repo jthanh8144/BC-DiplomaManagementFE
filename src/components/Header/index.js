@@ -18,7 +18,7 @@ export function Header() {
       (async () => {
         try {
           const res = await userApi.profile();
-          setIsSuperAdmin(res.role);
+          setIsSuperAdmin(res.role === 'superadmin');
         } catch (error) {
           if (error.response.status === 401) {
             logoutUser();

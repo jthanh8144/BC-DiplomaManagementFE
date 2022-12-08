@@ -44,6 +44,22 @@ export function ModalCreate() {
   };
 
   const handleSubmit = () => {
+    console.log('click');
+    console.log(
+      code,
+      fullName,
+      dateOfBirth,
+      gender,
+      certificate,
+      speciality,
+      graduationYear,
+      school,
+      rank,
+      modeOfStudy,
+      regNo,
+      image,
+      status
+    );
     if (
       code &&
       fullName &&
@@ -56,8 +72,7 @@ export function ModalCreate() {
       rank &&
       modeOfStudy &&
       regNo &&
-      image &&
-      status
+      image
     ) {
       (async () => {
         try {
@@ -79,6 +94,15 @@ export function ModalCreate() {
             urlImage: res.url,
             status,
           });
+          alert('Thêm văn bằng thành công!');
+          setFullName('');
+          setCode('');
+          setCertificate('');
+          setSpeciality('');
+          setModeOfStudy('');
+          setSchool('');
+          setGraduationYear('');
+          setRegNo('');
         } catch (error) {
           alert('Có lỗi xảy ra, vui lòng thử lại sau!');
           console.log(error);
@@ -103,6 +127,7 @@ export function ModalCreate() {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={() => image && setImage(null)}
             ></button>
           </div>
           <div className="modal-body">

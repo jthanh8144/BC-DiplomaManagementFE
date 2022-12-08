@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from '../Table.module.scss';
@@ -7,9 +6,6 @@ import { DiplomaTableItem } from './DiplomaTableItem';
 const cx = classNames.bind(styles);
 
 export function DiplomaTable({ diplomas, isAdmin = true, isSuperAdmin }) {
-  // useEffect(() => {
-  //   console.log(diplomas);
-  // }, [diplomas]);
   return (
     <div className={cx('main-content__table')}>
       <table className="table text-center">

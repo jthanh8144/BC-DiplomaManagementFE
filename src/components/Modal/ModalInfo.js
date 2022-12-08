@@ -36,13 +36,13 @@ export function ModalInfo() {
                   Họ và tên:
                 </div>
                 <div className={cx('col-3', 'modal-section__info')}>
-                  {diploma?.name}
+                  {diploma?.fullName}
                 </div>
                 <div className={cx('col-1', 'modal-section__label')}>
                   Ngày sinh:
                 </div>
                 <div className={cx('col-3', 'modal-section__info')}>
-                  {diploma?.birthday}
+                  {diploma?.dateOfBirth}
                 </div>
                 <div className={cx('col-1', 'modal-section__label')}>
                   Giới tính:
@@ -79,7 +79,7 @@ export function ModalInfo() {
                       Loại bằng:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      {diploma?.name}
+                      {diploma?.certificate}
                     </div>
                   </div>
                   <div className="row">
@@ -87,7 +87,7 @@ export function ModalInfo() {
                       Chuyên ngành:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      {diploma?.name}
+                      {diploma?.speciality}
                     </div>
                   </div>
                   <div className="row">
@@ -95,7 +95,7 @@ export function ModalInfo() {
                       Hình thức đào tạo:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      {diploma?.name}
+                      {diploma?.modeOfStudy}
                     </div>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ export function ModalInfo() {
                       Năm tốt nghiệp:
                     </div>
                     <div className={cx('col-8', 'modal-section__info')}>
-                      {diploma?.year}
+                      {diploma?.graduationYear}
                     </div>
                   </div>
                   <div className="row">
