@@ -37,7 +37,7 @@ export function Header() {
     >
       <div className={cx('container-fluid', 'main-nav')}>
         <Link to="/" className={cx('main-nav__logo', 'navbar-brand')}>
-          LOGOLOGO
+          HTT
         </Link>
         <button className="navbar-toggler" type="button">
           <span className="navbar-toggler-icon"></span>
@@ -48,16 +48,20 @@ export function Header() {
               <>
                 <li className={cx('nav-item', 'main-nav__item')}>
                   <Link
-                    to="/admin/diplomas"
-                    className={cx('nav-link', 'main-nav__item-link', 'active')}
+                    to="/admins/diplomas"
+                    className={cx('nav-link', 'main-nav__item-link', {
+                      active: window.location.pathname === '/admins/diplomas',
+                    })}
                   >
                     Quản lí văn bằng
                   </Link>
                 </li>
                 <li className={cx('nav-item', 'main-nav__item')}>
                   <Link
-                    to="/admins/users"
-                    className={cx('nav-link', 'main-nav__item-link')}
+                    to="/admins"
+                    className={cx('nav-link', 'main-nav__item-link', {
+                      active: window.location.pathname === '/admins',
+                    })}
                   >
                     Quản lí người dùng
                   </Link>

@@ -7,7 +7,7 @@ export function AdminTableItem({ admin, isSuperAdmin = true }) {
   const { setAdmin } = useContext(DataContext);
   const handleClick = async () => {
     try {
-      const response = userApi.getById(admin.id);
+      const response = await userApi.getById(admin.id);
       setAdmin(response);
     } catch (error) {
       console.log(error);
@@ -20,6 +20,7 @@ export function AdminTableItem({ admin, isSuperAdmin = true }) {
       try {
         await userApi.delete(admin.id);
         alert('Xoá tài khoản thành công!');
+        window.location.reload(false);
       } catch (error) {
         console.log(error);
       }
@@ -42,8 +43,6 @@ export function AdminTableItem({ admin, isSuperAdmin = true }) {
           <i
             className="fa-solid fa-trash"
             onClick={handleDelete}
-            data-bs-toggle="modal"
-            data-bs-target="#modal-admin"
           ></i>
         </td>
       )}

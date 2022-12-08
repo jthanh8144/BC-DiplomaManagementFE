@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { userApi } from '~/api/userApi';
+import { DataContext } from '~/contexts/DataContext';
 
-export function ModalAdmin({ admin }) {
+export function ModalAdmin() {
+  const { admin } = useContext(DataContext);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('role');
+  const [role, setRole] = useState('admin');
 
   useEffect(() => {
     if (!!admin) {
@@ -13,7 +16,7 @@ export function ModalAdmin({ admin }) {
       setRole(admin.role);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [admin]);
 
   const handleClick = () => {
     if (!!admin) {
@@ -28,6 +31,8 @@ export function ModalAdmin({ admin }) {
       (async () => {
         try {
           await userApi.register({ username, password, role });
+          alert('Thêm người quản lí thành công!');
+          window.location.reload(false);
         } catch (error) {
           console.log(error);
         }
@@ -40,11 +45,19 @@ export function ModalAdmin({ admin }) {
       (async () => {
         try {
           await userApi.update(admin.id, { password, role });
+          alert('Chỉnh sửa người quản lí thành công!');
+          window.location.reload(false);
         } catch (error) {
           console.log(error);
         }
       })();
     }
+  };
+
+  const clearInput = () => {
+    setUsername('');
+    setPassword('');
+    setRole('admin');
   };
 
   return (
@@ -65,6 +78,7 @@ export function ModalAdmin({ admin }) {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={clearInput}
             ></button>
           </div>
           <div className="modal-body">
