@@ -6,6 +6,7 @@ import { DataProvider } from '~/contexts/DataContext';
 import { publicRoutes, privateRoutes } from '~/routes';
 import { DefaultLayout } from '~/layouts';
 import { ScrollToTop } from '~/components/ScrollToTop';
+import { Loading } from '~/components/Loading';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
               );
             })}
           </Routes>
+          <Loading />
         </DataProvider>
       </AuthProvider>
     </Router>

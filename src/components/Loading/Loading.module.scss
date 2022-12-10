@@ -1,0 +1,9 @@
+.loading-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__text {
+    padding-left: 20px;
+  }
+}

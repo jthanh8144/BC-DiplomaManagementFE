@@ -2,33 +2,37 @@ import { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '~/contexts/AuthContext';
+import { DataContext } from '~/contexts/DataContext';
 import { userApi } from '~/api/userApi';
 
 export function ModalLogin() {
   const navigate = useNavigate();
 
   const { loginUser, setIsSuperAdmin } = useContext(AuthContext);
+  const { setLoading } = useContext(DataContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const closeModal = useRef()
+  const closeModal = useRef();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       if (username && password) {
+        setLoading(true);
         const response = await userApi.login({ username, password });
+        setLoading(false);
+        closeModal.current.click();
         if (response.accessToken) {
           loginUser(response.accessToken, username);
           const res = await userApi.profile();
-          console.log(res.role);
           setIsSuperAdmin(res.role === 'superadmin');
-          closeModal.current.click()
           navigate('/admins/diplomas');
         }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
       alert('Sai tài khoản hoặc mật khẩu!');
     }

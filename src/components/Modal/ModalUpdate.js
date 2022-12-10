@@ -9,7 +9,7 @@ import { diplomaApi } from '~/api/diplomaApi';
 const cx = classNames.bind(styles);
 
 export function ModalUpdate() {
-  const { diploma } = useContext(DataContext);
+  const { diploma, setLoading } = useContext(DataContext);
 
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
@@ -27,6 +27,7 @@ export function ModalUpdate() {
   const [image, setImage] = useState();
 
   useEffect(() => {
+    setLoading(true);
     setFullName(diploma?.fullName);
     setDateOfBirth(diploma?.dateOfBirth);
     setGender(diploma?.gender);
@@ -40,6 +41,8 @@ export function ModalUpdate() {
     setRank(diploma?.rank);
     setRegNo(diploma?.regNo);
     setPreview(diploma?.urlImage);
+    setLoading(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [diploma]);
 
   const onSelectImage = (e) => {
@@ -67,6 +70,7 @@ export function ModalUpdate() {
       preview
     ) {
       (async () => {
+        setLoading(true);
         try {
           let url = diploma.urlImage;
           if (preview !== url) {
@@ -89,9 +93,11 @@ export function ModalUpdate() {
             urlImage: url,
             status,
           });
+          setLoading(false);
           alert('Chỉnh sửa văn bằng thành công!');
           window.location.reload(false);
         } catch (error) {
+          setLoading(false);
           console.log(error);
           if (error.response.status === 413) {
             alert('Ảnh tải lên vượt quá 5MB');

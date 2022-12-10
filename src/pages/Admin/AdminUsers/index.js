@@ -12,19 +12,23 @@ const cx = classNames.bind(styles);
 
 export function AdminUsers() {
   const { isSuperAdmin } = useContext(AuthContext);
-  const { setAdmin } = useContext(DataContext);
+  const { setAdmin, setLoading } = useContext(DataContext);
 
   const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         const response = await userApi.getAll();
         setAdmins(response);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

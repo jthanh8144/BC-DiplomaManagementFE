@@ -8,6 +8,7 @@ import { ModalCreate, ModalInfo, ModalUpdate } from '~/components/Modal';
 import { diplomaApi } from '~/api/diplomaApi';
 import { useDebounce } from '~/hooks';
 import { AuthContext } from '~/contexts/AuthContext';
+import { DataContext } from '~/contexts/DataContext';
 
 const cx = classNames.bind(styles);
 
@@ -18,13 +19,17 @@ export function Diplomas() {
   const [searchValue, setSearchValue] = useState('');
 
   const { isSuperAdmin, logoutUser } = useContext(AuthContext);
+  const { setLoading } = useContext(DataContext);
 
   const debouncedValue = useDebounce(searchValue, 200);
   const fetchDiplomas = async () => {
+    setLoading(true);
     try {
       const response = await diplomaApi.getAll();
       setDiplomas(response);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if (error.response.status === 401) {
         logoutUser();
         alert('Bạn chưa đăng nhập');
@@ -55,15 +60,18 @@ export function Diplomas() {
       return;
     }
     searchDiplomas();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
 
   const handleSyncData = async () => {
     try {
-      await diplomaApi.sync()
-      alert('Đồng bộ dữ liệu thành công!')
+      setLoading(true);
+      await diplomaApi.sync();
+      setLoading(false);
+      alert('Đồng bộ dữ liệu thành công!');
       window.location.reload(false);
     } catch (error) {
+      setLoading(false);
       if (error.response.status === 401) {
         logoutUser();
         alert('Bạn chưa đăng nhập');
@@ -72,7 +80,7 @@ export function Diplomas() {
         alert('Có lỗi xảy ra');
       }
     }
-  }
+  };
 
   return (
     <>
@@ -87,14 +95,16 @@ export function Diplomas() {
             <i className="fa-solid fa-plus"></i>
             Thêm văn bằng
           </button>
-          {isSuperAdmin && <button
-            type="button"
-            className="btn btn-danger"
-            onClick={handleSyncData}
-          >
-            <i class="fa-solid fa-arrows-rotate"></i>
-            Đồng bộ dữ liệu từ blockchain
-          </button>}
+          {isSuperAdmin && (
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleSyncData}
+            >
+              <i className="fa-solid fa-arrows-rotate"></i>
+              Đồng bộ dữ liệu từ blockchain
+            </button>
+          )}
           <div className={cx('main-content__top-search')}>
             <input
               type="text"

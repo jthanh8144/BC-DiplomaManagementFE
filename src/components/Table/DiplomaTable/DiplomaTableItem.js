@@ -10,13 +10,16 @@ export function DiplomaTableItem({
   isAdmin = false,
   isSuperAdmin = false,
 }) {
-  const { setDiploma } = useContext(DataContext);
+  const { setDiploma, setLoading } = useContext(DataContext);
 
   const handleClick = async () => {
     try {
+      setLoading(true);
       const response = await diplomaApi.getByCode(diploma.code);
       setDiploma(response);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -24,11 +27,14 @@ export function DiplomaTableItem({
   const handleDelete = async () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('Bạn cho chắc sẽ xoá văn bằng này chứ?') === true) {
+      setLoading(true);
       try {
         await diplomaApi.delete(diploma.code);
+        setLoading(false);
         alert('Xoá văn bằng thành công!');
         window.location.reload(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }

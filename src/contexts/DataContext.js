@@ -6,6 +6,7 @@ function DataProvider({ children }) {
   const [diploma, setDiploma] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [searchDiplomas, setSearchDiplomas] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const contextData = {
     diploma,
@@ -13,7 +14,9 @@ function DataProvider({ children }) {
     admin,
     setAdmin,
     searchDiplomas,
-    setSearchDiplomas
+    setSearchDiplomas,
+    loading,
+    setLoading,
   };
 
   return (

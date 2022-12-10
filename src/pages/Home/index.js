@@ -14,7 +14,7 @@ export function Home() {
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
-  const { setSearchDiplomas } = useContext(DataContext);
+  const { setSearchDiplomas, setLoading } = useContext(DataContext);
 
   const [fullName, setFullName] = useState('');
   const [code, setCode] = useState('');
@@ -22,6 +22,7 @@ export function Home() {
   const handleSearch = async () => {
     if (fullName || code) {
       try {
+        setLoading(true);
         const data = {};
         if (fullName) {
           Object.assign(data, { name: fullName });
@@ -29,8 +30,8 @@ export function Home() {
           Object.assign(data, { code });
         }
         const response = await diplomaApi.search(data);
-        console.log(response);
         setSearchDiplomas(response);
+        setLoading(false);
         navigate('/diplomas');
       } catch (error) {
         alert('Có lỗi xảy ra trong quá trình tìm kiếm!');

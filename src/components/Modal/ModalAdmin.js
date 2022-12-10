@@ -4,7 +4,7 @@ import { userApi } from '~/api/userApi';
 import { DataContext } from '~/contexts/DataContext';
 
 export function ModalAdmin() {
-  const { admin } = useContext(DataContext);
+  const { admin, setLoading } = useContext(DataContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,11 +29,14 @@ export function ModalAdmin() {
   const handleCreate = () => {
     if (username && password && role) {
       (async () => {
+        setLoading(true);
         try {
           await userApi.register({ username, password, role });
+          setLoading(false);
           alert('Thêm người quản lí thành công!');
           window.location.reload(false);
         } catch (error) {
+          setLoading(false);
           console.log(error);
         }
       })();
@@ -43,11 +46,14 @@ export function ModalAdmin() {
   const handleUpdate = () => {
     if (password || role !== admin.role) {
       (async () => {
+        setLoading(true);
         try {
           await userApi.update(admin.id, { password, role });
+          setLoading(false);
           alert('Chỉnh sửa người quản lí thành công!');
           window.location.reload(false);
         } catch (error) {
+          setLoading(false);
           console.log(error);
         }
       })();

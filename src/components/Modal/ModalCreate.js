@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Modal.module.scss';
 import images from '~/assets/images';
 import { diplomaApi } from '~/api/diplomaApi';
+import { DataContext } from '~/contexts/DataContext';
 
 const cx = classNames.bind(styles);
 
 export function ModalCreate() {
+  const { setLoading } = useContext(DataContext);
+
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(
     new Date().toISOString().substring(0, 10)
@@ -44,22 +47,7 @@ export function ModalCreate() {
   };
 
   const handleSubmit = () => {
-    console.log('click');
-    console.log(
-      code,
-      fullName,
-      dateOfBirth,
-      gender,
-      certificate,
-      speciality,
-      graduationYear,
-      school,
-      rank,
-      modeOfStudy,
-      regNo,
-      image,
-      status
-    );
+    setLoading(true);
     if (
       code &&
       fullName &&
@@ -94,6 +82,7 @@ export function ModalCreate() {
             urlImage: res.url,
             status,
           });
+          setLoading(false);
           alert('Thêm văn bằng thành công!');
           setFullName('');
           setCode('');
@@ -104,6 +93,7 @@ export function ModalCreate() {
           setGraduationYear('');
           setRegNo('');
         } catch (error) {
+          setLoading(false);
           alert('Có lỗi xảy ra, vui lòng thử lại sau!');
           console.log(error);
         }
