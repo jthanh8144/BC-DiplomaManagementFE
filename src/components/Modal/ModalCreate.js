@@ -92,6 +92,7 @@ export function ModalCreate() {
           setSchool('');
           setGraduationYear('');
           setRegNo('');
+          window.location.reload(false);
         } catch (error) {
           setLoading(false);
           alert('Có lỗi xảy ra, vui lòng thử lại sau!');
